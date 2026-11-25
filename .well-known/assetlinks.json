@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "io.github.zidane200882_cell.twa",
+        "sha256_cert_fingerprints": ["8B:85:7C:D6:3E:69:83:91:B3:3C:99:F7:0A:82:6D:D5:96:AE:23:81:13:D2:67:11:1A:F5:6D:18:1C:1F:42:E2"]
+      }
+    }]
