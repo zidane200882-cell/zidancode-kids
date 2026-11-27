@@ -16,7 +16,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - run: npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 && npx cap add android && npx cap sync android
+      - run: npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 && npx --yes javascript-obfuscator www --output www --compact true --self-defending true --string-array true && npx cap add android && npx cap sync android
       - run: keytool -genkey -v -keystore z.keystore -alias ZIDANCOD -keyalg RSA -keysize 2048 -validity 10000 -storepass Zidan2026 -keypass Zidan2026 -dname "CN=Adel Zidane,O=SonaaTech,C=EG"
       - run: cd android && chmod +x gradlew && ./gradlew assembleRelease
       - run: |
