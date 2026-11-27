@@ -16,7 +16,7 @@ jobs:
         with:
           distribution: temurin
           java-version: 17
-      - run: npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 && npx --yes javascript-obfuscator www --output www --compact true --self-defending true --string-array true && npx cap add android && npx cap sync android
+      - run: npm install @capacitor/core@6 @capacitor/cli@6 @capacitor/android@6 && npx --yes javascript-obfuscator www --output www --compact true --self-defending true --string-array true && npx cap add android && npx cap sync android && python3 -c "import glob,shutil; [shutil.copy('www/zidan-kids-logo-512.png',f) for f in glob.glob('android/app/src/main/res/mipmap-*/ic_launcher*.png')]"
       - run: keytool -genkey -v -keystore z.keystore -alias ZIDANCOD -keyalg RSA -keysize 2048 -validity 10000 -storepass Zidan2026 -keypass Zidan2026 -dname "CN=Adel Zidane,O=SonaaTech,C=EG"
       - run: cd android && chmod +x gradlew && ./gradlew assembleRelease
       - run: |
