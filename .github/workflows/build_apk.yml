@@ -1,0 +1,29 @@
+name: Build APK
+on:
+  push:
+    branches: [ apk-release ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - run: npm install && npx cap add android && npx cap sync android
+      - run: keytool -genkey -v -keystore z.keystore -alias ZIDANCOD -keyalg RSA -keysize 2048 -validity 10000 -storepass Zidan2026 -keypass Zidan2026 -dname "CN=Adel Zidane,O=SonaaTech,C=EG"
+      - run: cd android && chmod +x gradlew && ./gradlew assembleRelease
+      - run: |
+          BT=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
+          $BT/zipalign -v -p 4 android/app/build/outputs/apk/release/app-release-unsigned.apk ZidanCode_Kids_AllGrades_2026.apk
+          $BT/apksigner sign --ks z.keystore --ks-pass pass:Zidan2026 --key-pass pass:Zidan2026 --ks-key-alias ZIDANCOD ZidanCode_Kids_AllGrades_2026.apk
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v2.0-all-in-one
+          files: ZidanCode_Kids_AllGrades_2026.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
